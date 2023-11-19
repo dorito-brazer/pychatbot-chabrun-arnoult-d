@@ -106,8 +106,11 @@ def tf_idf_nul(dico): # Lorsque l element est egal a 0 alors la cle est ajoute a
     return lst
     
 def matrice(files_names):
-    for f_names in files_names:
+    for i in range(len(files_names)):
+        f_names = files_names[i]
         f = open("cleaned/"+f_names,"r",encoding= "utf8")
+        
+        
         
 # Appels
 
