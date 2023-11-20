@@ -98,17 +98,42 @@ def score_tf_idf(dico_tf,dico_idf):
         dico_tf_idf[el] = dico_tf[el]*dico_idf[el]
     return dico_tf_idf    
 
-def tf_idf_nul(dico): # Lorsque l element est egal a 0 alors la cle est ajoute a une liste
-    lst = []
+def tf_idf_nul(dico): # Lorsque l element est egal a 0 alors la cle est ajoute a une liste "nul"
+    nul = []
     for el in dico:
         if dico[el] == 0 :
-            lst.append(el)
-    return lst
+            nul.append(el)
+    return nul
     
 def matrice(files_names):
     for i in range(len(files_names)):
         f_names = files_names[i]
         f = open("cleaned/"+f_names,"r",encoding= "utf8")
+
+
+def matrice_resultante_tf_idf():
+    for el1 in range(nul):
+        LST=[]
+        for j in range(len(files_names)):
+            f_names = files_names[i]
+            f = open("cleaned/"+f_names,"r",encoding= "utf8")
+
+def matrice_res(files_names):
+    contenu_fich=[]
+    ind=0
+    for i in range(len(files_names)):
+        with open("cleaned/"+f_names, "r", encoding="utf8") as fich:
+            élément=fich.read
+            contenu_fich=.append(contenu)
+        ind+=1
+        
+            
+            
+            
+        
+        
+    
+        
         
         
         
