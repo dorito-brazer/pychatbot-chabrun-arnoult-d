@@ -126,6 +126,13 @@ def matrice_res(files_names):
             élément=fich.read
             contenu_fich=.append(contenu)
         ind+=1
+    matr_res=[]
+    for fich in range(len(contenu_fich)):
+       ligne=[]
+        for i in range 
+        
+        
+            
         
             
             
