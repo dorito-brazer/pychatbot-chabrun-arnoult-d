@@ -43,7 +43,7 @@ def nom_president(files_names): # A partir du nom du fichier contenu dans files_
                 mot = ""
     return names
 
-def write(name):
+def write(name): 
     text = minuscules(name)
     f = open("cleaned/"+name,"w",encoding="utf8")
     for lst in text:
@@ -53,7 +53,7 @@ def write(name):
         f.write("\n")
             
             
-def prenom(nom): # Lorsqu un prenom correspondant a l une des clé du dictionnaire, renvoie le prénom associé
+def prenom(nom): # Lorsqu'un prenom correspondant a l'une des clé du dictionnaire, renvoie le prénom associé
     prenoms = {"Chirac": "Jacques",
            "Giscard dEstaing": "Valéry",
            "Macron": "Emmanuel",
@@ -92,7 +92,7 @@ def calcul_idf(dico_tf): # Avec le nombre d occurence de chaque mot on calule le
         dico_idf[el] = idf
     return dico_idf
 
-def score_tf_idf(dico_tf,dico_idf):
+def score_tf_idf(dico_tf,dico_idf): # Calcule le score tf idf et le retourne dans une matrice
     dico_tf_idf = {}
     for el in dico_tf:
         dico_tf_idf[el] = dico_tf[el]*dico_idf[el]
@@ -117,17 +117,12 @@ def matrice(files_names):
                 matrice[el] += [dico_tf_idf[el]]
             else:
                 matrice[el] = []
-                matrice[el] += idx*[0]+ [dico_tf_idf[el]]
+                matrice[el] += idx*[1]+ [dico_tf_idf[el]]
         idx+= 1
+    for el in matrice:
+        while len(matrice[el])!=8:
+            matrice[el].append(1)
     return matrice
-
-
-def matrice_resultante_tf_idf():
-    for el1 in range(nul):
-        LST=[]
-        for j in range(len(files_names)):
-            f_names = files_names[i]
-            f = open("cleaned/"+f_names,"r",encoding= "utf8")
 
 def matrice_res(files_names):
     contenu_fich=[]
@@ -141,11 +136,20 @@ def matrice_res(files_names):
     for fich in range(len(contenu_fich)):
        ligne=[]
         for i in range 
-        
+
+def mots_score_tf_idf_nul():
+    contenu_nul=[]
+    for el1 in tf_idf_nul:
+        if tf_idf_nul[el]=True:
+            contenu_nul.append(el1)
         
             
         
-            
+
+
+
+    
+
             
             
         
