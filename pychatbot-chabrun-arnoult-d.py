@@ -51,7 +51,7 @@ def write(name):
             f.write(mot)
             f.write(" ")
         f.write("\n")
-            
+    f.close()
             
 def prenom(nom): # Lorsqu'un prenom correspondant a l'une des clé du dictionnaire, renvoie le prénom associé
     prenoms = {"Chirac": "Jacques",
@@ -65,38 +65,43 @@ def prenom(nom): # Lorsqu'un prenom correspondant a l'une des clé du dictionnai
 def fich_to_list(f): # Enleve tous les signes de ponctuation et remplace les ' et - par des espaces
     lst1 = [] 
     for ligne in f:
-        mot,lst2 = "", []
+        mot = ""
         for char in ligne[:-1]:
-            if char == " " and mot !="":
-                lst2.append(mot)
+            if (ord(char) >= 65 and ord(char)<= 90) or (ord(char)>= 191 and ord(char) <= 223):
+                char = chr(ord(char)+32)
+            if (char <= "z" and char>= "a") or (ord(char)>= 224 and ord(char) <= 255):
+                mot+= char
+            if char in "'-" and mot != "":
+                mot += " "
+            if char in ",.;:?! " and mot !="":
+                lst1.append(mot)
                 mot = ""
-            elif not char in ",.;:?!-' ":
-                mot += char
-        lst1.append(lst2)
-    return lst1     
+    f.close()
+    return lst1   
     
 def dictionnaire(lst): # Calcule le nombre d occurence de chaque element d un tableau dans celui ci
     dico = {}
     for el in lst:
-        for i in el:
-            if i in dico:
-                dico[i] += 1
-            else:
-                dico[i] = 1
+        if el in dico:
+            dico[el] += 1
+        else:
+            dico[el] = 1
     return dico
         
 def calcul_idf(dico_tf): # Avec le nombre d occurence de chaque mot on calule le log en base 10 de ce mot 
     dico_idf = {}
     for el in dico_tf:
-        idf = log(1/dico_tf[el],10)
+        idf = round(log(1/dico_tf[el],10),2)
         dico_idf[el] = idf
     return dico_idf
 
-def score_tf_idf(dico_tf,dico_idf): # Calcule le score tf idf et le retourne dans une matrice
+def score_tf_idf(f):
+    dico_tf = dictionnaire(fich_to_list(f))
+    dico_idf = calcul_idf(dico_tf)
     dico_tf_idf = {}
     for el in dico_tf:
         dico_tf_idf[el] = dico_tf[el]*dico_idf[el]
-    return dico_tf_idf    
+    return dico_tf_idf   
 
 def tf_idf_nul(dico): # Lorsque l element est egal a 0 alors la cle est ajoute a une liste "nul"
     nul = []
@@ -104,25 +109,6 @@ def tf_idf_nul(dico): # Lorsque l element est egal a 0 alors la cle est ajoute a
         if dico[el] == 0 :
             nul.append(el)
     return nul
-    
-def matrice(files_names):
-    matrice = {}
-    idx = 0
-    for i in range(len(files_names)):
-        f_names = files_names[i]
-        f = open("cleaned/"+f_names,"r",encoding= "utf8")
-        dico_tf_idf = score_tf_idf(f)
-        for el in dico_tf_idf:
-            if el in matrice:
-                matrice[el] += [dico_tf_idf[el]]
-            else:
-                matrice[el] = []
-                matrice[el] += idx*[1]+ [dico_tf_idf[el]]
-        idx+= 1
-    for el in matrice:
-        while len(matrice[el])!=8:
-            matrice[el].append(1)
-    return matrice
 
 def matrice_res(files_names):
     contenu_fich=[]
@@ -142,38 +128,41 @@ def mots_score_tf_idf_nul():
     for el1 in tf_idf_nul:
         if tf_idf_nul[el]=True:
             contenu_nul.append(el1)
-        
-            
-        
 
-
-
-    
-
-            
-            
-        
-        
-    
-        
-        
-        
+ def matrice(files_names):
+    matrice = {}
+    idx = 0
+    for i in range(len(files_names)):
+        f_names = files_names[i]
+        f = open("speeches/"+f_names,"r",encoding= "utf8")
+        dico_tf_idf = score_tf_idf(f)
+        for el in dico_tf_idf:
+            if el in matrice:
+                matrice[el] += [dico_tf_idf[el]]
+            else:
+                matrice[el] = []
+                matrice[el] += [dico_tf_idf[el]]
+        idx+= 1
+    return matrice
+                
+def verif_matrice(matrice):
+    idx = 0
+    lst = []
+    for el in matrice:
+        if len(matrice[el]) != 8:
+            lst.append(el)
+            idx +=1
+    return idx,lst
         
 # Appels
 
 directory = "speeches"
 files_names = list_of_files(directory, "txt")
-lst = []
+
 #for name in files_names:
 #    write(name)
+f = open("speeches/"+files_names[0],"r",encoding="utf8")
 
-f = open("cleaned/"+ files_names[0], "r",encoding="utf8")
 lst = fich_to_list(f)
-
-dico_tf = dictionnaire(lst)
-print(dico_tf)
-dico_idf = calcul_idf(dico_tf)
-dico_tf_idf = score_tf_idf(dico_tf,dico_idf)
-print(dico_idf)
-print(dico_tf_idf)
-print(tf_idf_nul(dico_tf_idf))
+matrice = matrice(files_names)
+print(matrice)         
