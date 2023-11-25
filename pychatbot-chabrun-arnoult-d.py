@@ -173,8 +173,25 @@ def mots_score_max(matrice):
         elif score_ttl==max_val:
             mots_imp.append(mot)
     return mots_imp
-    
 
+def mot_max_chirac(files_names):
+    mot_max_chirac=[]
+    ind=0
+    for i in files_names:
+        f_names=files_names[i]
+        if"Chirac" in f_names:
+            F=open("speeches/"+ f_names, "r", encoding=="utf8")
+            dico_tf_idf=score_tf_idf(F)
+            for el in dico_tf_idf:
+                if el in mot_max_chirac:
+                    mot_max_chirac[el]= mot_max_chirac[el]+[dico_tf_idf[el]]
+                else:
+                     mot_max_chirac[el]=[]
+                     mot_max_chirac[el]= mot_max_chirac[el]+[dico_tf_idf[el]]
+            ind=ind+1
+        return  mot_max_chirac
+
+                
 
 # Appels
 
