@@ -7,7 +7,7 @@ from math import *
 def list_of_files(directory, extension): # Recupere le nom des fichiers textes contenues dans un dossier
     files_names = []
     for filename in os.listdir(directory):
-        if filename.endswith(extension):
+        if filename.endswith(extension): 
             files_names.append(filename)
     return files_names
 
@@ -153,7 +153,20 @@ def verif_matrice(matrice):
             lst.append(el)
             idx +=1
     return idx,lst
-        
+
+def mots_pas_imp(matrice): # Parcours chaque mot dans la matrice contenant les discours et si leur score tf-idf=0, le met danns la liste mots_pas_imp
+    mots_pas_imp = []
+    for el in matrice:
+        score_0 = True
+        for valeur in matrice[el]:
+            if valeur != 0:
+                score_0 = False
+                break
+        if score_0:
+            mots_pas_imp.append(el)
+    return mots_pas_imp
+
+
 # Appels
 
 directory = "speeches"
