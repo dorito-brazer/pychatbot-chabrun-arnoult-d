@@ -123,12 +123,6 @@ def matrice_res(files_names):
        ligne=[]
         for i in range 
 
-def mots_score_tf_idf_nul():
-    contenu_nul=[]
-    for el1 in tf_idf_nul:
-        if tf_idf_nul[el]=True:
-            contenu_nul.append(el1)
-
  def matrice(files_names):
     matrice = {}
     idx = 0
