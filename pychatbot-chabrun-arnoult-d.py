@@ -166,6 +166,21 @@ def mots_pas_imp(matrice): # Parcours chaque mot dans la matrice contenant les d
             mots_pas_imp.append(el)
     return mots_pas_imp
 
+def mots_score_max(matrice):
+    max_val=0
+    mots_imp=[]
+    for mot in matrice:
+        score_tf_idf=matrice[mot]
+        score_ttl=score_tf_idf[0]
+
+        if score_ttl>max_val:
+            max_val=score_ttl
+            mots_imp=[mot]
+        elif score_ttl==max_val:
+            mots_imp.append(mot)
+    return mots_imp
+    
+
 
 # Appels
 
