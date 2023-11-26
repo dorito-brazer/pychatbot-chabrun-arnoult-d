@@ -62,7 +62,7 @@ def prenom(nom): # Lorsqu'un prenom correspondant a l'une des clé du dictionnai
            "Sarkozy" : "Nicolas",
            "Hollande": "François",
            "Mitterrand": "François"}
-    return prenoms[nom]
+    return prenoms[nom]+" "+nom
 
 def fich_to_list(f): # Enleve tous les signes de ponctuation et remplace les ' et - par des espaces
     lst1 = [] 
