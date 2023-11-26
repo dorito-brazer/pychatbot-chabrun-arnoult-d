@@ -10,4 +10,8 @@ ligne 46 : Fonction : ( write ) ==> Cette fonction prend un nom de fichier, réc
 
 ligne 56 : Fonction : ( prenom ) ==> Cette fonction associe, dans un dictionnaire nommé prenom le prénom d'un président à son nom
 
-ligne 65 : Fonction : ( fich_to_list ) ==> Cette fonction 
+ligne 65 : Fonction : ( fich_to_list ) ==> Cette fonction est presque identique à la fonction minuscule a la seule différence qu'elle remplace les ' et les - par des espaces 
+
+ligne 82 : Fonction : ( dictionnaire ) ==> Calcule le nombre d'occurence de chaque mot d'un tableau et le stock dans un dico sous la forme mot : occurence
+
+ligne  : Fonction : ( calcul_idf ) ==> Calcule, avec le nombre d'occurence de chaque mot, le log en base 10 de ce mot 
