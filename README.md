@@ -1,6 +1,8 @@
 # Mathieu Chabrun Quentin Arnoult
 #pychatbot-chabrun-arnoult-d
 
+Explication des fonctions du programme : 
+
 ligne 7 : Fonction : ( list_of_file )==> Recupere le nom des fichiers contenant les dicsours contenus dans le dossier speeches et le stocke dans la liste files_names
 
 ligne 14 : Fonction : ( minuscules ) ==> Cette fonction renvoie une liste de listes, dans laquelle chaquz sous liste contient des mots d'une ligne d'un fichier où les caractères majuscules sont transformés en caractères minuscules et où la pnctuation est effacée. En gros elle réécris les discours en transformant tous les caractères majuscules en minuscules, enlèves les caractères spéciaux ,.;:?!- et stocke dans une liste lst1 tout le texte transformé. 
