@@ -30,18 +30,20 @@ def minuscules(texte): # Transforme tout les carateres majuscules en minuscules 
     text.close()
     return lst1       
     
-def nom_president(files_names): # A partir du nom du fichier contenu dans files_names, renvoie le nom du président
+def noms_president(files_names): # A partir du nom du fichier contenu dans files_names, renvoie le nom du président
     names = []
     for nom in files_names:
-        mot = ""
-        for char in nom[11:]:
-            if not char in ".123456789":
-                mot += char
-            elif char == "." and mot !="":
-                if not mot in names:
-                    names.append(mot)
-                mot = ""
+        if fich_to_name(nom) in names:
+            names.append(fich_to_name(nom))
     return names
+
+def fich_to_name(nom_f):
+    mot = ""
+    for char in nom_f[11:]:
+        if not char in ".123456789":
+            mot += char
+        else:
+            return mot
 
 def write(name): 
     text = minuscules(name)
@@ -79,29 +81,38 @@ def fich_to_list(f): # Enleve tous les signes de ponctuation et remplace les ' e
     f.close()
     return lst1   
     
-def dictionnaire(lst): # Calcule le nombre d occurence de chaque element d un tableau dans celui ci
+def dictionnaire(files_names): # Calcule le nombre d occurence de chaque element d un tableau dans celui ci
+    lst = []
+    for el in files_names:
+        f = open("speeches/"+el,"r",encoding="utf8")
+        lst.append(fich_to_list(f))
     dico = {}
-    for el in lst:
-        if el in dico:
-            dico[el] += 1
-        else:
-            dico[el] = 1
+    idx = 1
+    for lst2 in lst:
+        for el in lst2:
+            if el in dico:
+                dico[el][0] += 1
+                if dico[el][1][-1]!=idx:
+                    dico[el][1].append(idx)
+            else:
+                dico[el] = [1,[idx]]
+        idx +=1
     return dico
         
 def calcul_idf(dico_tf): # Avec le nombre d occurence de chaque mot on calule le log en base 10 de ce mot 
     dico_idf = {}
     for el in dico_tf:
-        idf = round(log(1/dico_tf[el],10),2)
+        idf = round(log((8/len(dico_tf[el][1]))+1,10),3)
         dico_idf[el] = idf
     return dico_idf
 
-def score_tf_idf(f):
-    dico_tf = dictionnaire(fich_to_list(f))
+def score_tf_idf(files_names):
+    dico_tf = dictionnaire(files_names)
     dico_idf = calcul_idf(dico_tf)
     dico_tf_idf = {}
     for el in dico_tf:
-        dico_tf_idf[el] = dico_tf[el]*dico_idf[el]
-    return dico_tf_idf   
+        dico_tf_idf[el] = dico_tf[el][0]*dico_idf[el]
+    return dico_tf_idf     
 
 def tf_idf_nul(dico): # Lorsque l element est egal a 0 alors la cle est ajoute a une liste "nul"
     nul = []
@@ -190,7 +201,34 @@ def mot_max_chirac(files_names):
                      mot_max_chirac[el]= mot_max_chirac[el]+[dico_tf_idf[el]]
             ind=ind+1
         return  mot_max_chirac
-
+        
+def ecologie(files_names):
+    dico_tf = dictionnaire(files_names)
+    for el in dico_tf:
+        if el == "climat" or el == "écologie" :
+            return prenom(fich_to_name(files_names[dico_tf[el][1][0]-1]))
+        
+def repetition(files_names):
+    dico_tf = dictionnaire(files_names)
+    names,fich = [],[]
+    for el in dico_tf["nation"][1]:
+        nom = fich_to_name(files_names[el-1])
+        fich.append(files_names[el-1])
+        if not nom in names:
+            names.append(nom)
+    maxi = [0,""]
+    for nom_f in fich:
+        f = open("speeches/"+nom_f,"r",encoding="utf8")
+        lst1 = fich_to_list(f)
+        rep = 0
+        for mot in lst1:
+            if mot == "nation":
+                rep +=1
+        if maxi[0] < rep and fich_to_name(nom_f) != maxi[1]:
+            maxi =[rep,fich_to_name(nom_f)]
+        if maxi[0] < rep and fich_to_name(nom_f) == maxi[1]:
+            maxi[0] += rep
+    return names,maxi
                 
 
 # Appels
