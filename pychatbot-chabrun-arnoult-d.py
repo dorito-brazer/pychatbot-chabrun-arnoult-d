@@ -133,20 +133,16 @@ def matrice_res(files_names):
     for fich in range(len(contenu_fich)):
        ligne=[]
         for i in range 
-
- def matrice(files_names):
+    
+def matrice(files_names):
     matrice = {}
     idx = 0
-    for i in range(len(files_names)):
-        f_names = files_names[i]
-        f = open("speeches/"+f_names,"r",encoding= "utf8")
-        dico_tf_idf = score_tf_idf(f)
-        for el in dico_tf_idf:
-            if el in matrice:
-                matrice[el] += [dico_tf_idf[el]]
-            else:
-                matrice[el] = []
-                matrice[el] += [dico_tf_idf[el]]
+    dico_tf_idf = score_tf_idf(files_names)
+    for el in dico_tf_idf:
+        if el in matrice:
+            matrice[el] += [dico_tf_idf[el]]
+        else:
+            matrice[el] = dico_tf_idf[el]
         idx+= 1
     return matrice
                 
