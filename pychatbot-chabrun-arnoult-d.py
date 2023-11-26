@@ -169,12 +169,6 @@ def mot_max_chirac(files_names):
             ind=ind+1
         return  mot_max_chirac
         
-def ecologie(files_names):
-    dico_tf = dictionnaire(files_names)
-    for el in dico_tf:
-        if el == "climat" or el == "écologie" :
-            return prenom(fich_to_name(files_names[dico_tf[el][1][0]-1]))
-        
 def repetition(files_names):
     dico_tf = dictionnaire(files_names)
     names,fich = [],[]
@@ -197,7 +191,12 @@ def repetition(files_names):
             maxi[0] += rep
     return names,maxi
                 
-
+def ecologie(files_names):
+    dico_tf = dictionnaire(files_names)
+    for el in dico_tf:
+        if el == "climat" or el == "écologie" :
+            return prenom(fich_to_name(files_names[dico_tf[el][1][0]-1]))
+        
 # Appels
 
 directory = "speeches"
