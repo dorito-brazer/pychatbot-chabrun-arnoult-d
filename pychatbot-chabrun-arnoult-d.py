@@ -33,7 +33,7 @@ def minuscules(texte): # Transforme tout les carateres majuscules en minuscules 
 def noms_president(files_names): # A partir du nom du fichier contenu dans files_names, renvoie le nom du président
     names = []
     for nom in files_names:
-        if fich_to_name(nom) in names:
+        if not fich_to_name(nom) in names:
             names.append(fich_to_name(nom))
     return names
 
