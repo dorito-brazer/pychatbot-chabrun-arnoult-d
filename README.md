@@ -35,5 +35,5 @@ ligne 172 : Fonction ( repetition ) ==> Cette fonction parcours tous les discour
 
 ligne 194 : Fonction ( ecologie ) ==> Cette fonction parcours tous les discours et renvoie le nom du président qui a parlé en premmier du climat et/ou d'écologie 
 
-
+ligne 200 : Fonction ( mots_dans_fichiers ) ==> Cette fonction va prendre tous les mots ayant un score TF-IDF dans chaque fichier et si ce mot ne figure pas dans la liste des mots pas important alors celui ci est ajouté dans une liste qui sera renvoyé en fin de fonction
 
