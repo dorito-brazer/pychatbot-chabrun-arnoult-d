@@ -1,4 +1,5 @@
-# pychatbot-chabrun-arnoult-d
+# Mathieu Chabrun Quentin Arnoult
+#pychatbot-chabrun-arnoult-d
 
 ligne 7 : Fonction : ( list_of_file )==> Recupere le nom des fichiers contenant les dicsours contenus dans le dossier speeches et le stocke dans la liste files_names
 
