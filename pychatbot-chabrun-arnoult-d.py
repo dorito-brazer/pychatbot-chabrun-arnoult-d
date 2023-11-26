@@ -196,6 +196,15 @@ def ecologie(files_names):
     for el in dico_tf:
         if el == "climat" or el == "écologie" :
             return prenom(fich_to_name(files_names[dico_tf[el][1][0]-1]))
+
+def mots_dans_fichiers(files_names):
+    matrice = matrice(files_names)
+    lst = mots_pas_imp(matrice)
+    mots_evoq = []
+    for el in matrice:
+        if len(matrice[el]) == 8 and not el in lst:
+            mots_evoq.append(el)
+    return mots_evoq
         
 # Appels
 
