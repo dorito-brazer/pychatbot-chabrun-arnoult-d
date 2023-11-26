@@ -15,7 +15,7 @@ if __name__ == '__main__':
     elif Fonction == 5 :
         ecologie(files_names)
     elif Fonction == 6 :
-        fct3()  
+        mots_dans_fichiers()  
     else:
         print("Ce numéro de fonction n'existe pas")
       
