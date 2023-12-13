@@ -205,6 +205,24 @@ def mots_dans_fichiers(files_names):
         if len(matrice[el]) == 8 and not el in lst:
             mots_evoq.append(el)
     return mots_evoq
+
+def question_tokenisee(qst):
+    lst_mot = []
+    mot = ""
+    for char in qst:
+        if (ord(char) >= 65 and ord(char)<= 90) or (ord(char)>= 191 and ord(char) <= 223):
+            char = chr(ord(char)+32)
+        if (char <= "z" and char >= "a") or (ord(char) >= 224 and ord(char) <= 255):
+            mot += char
+        if char in "'- " and mot != "":
+            mot += " "
+        if char in ",.;:?! " and mot != "":
+            lst_mot.append(mot)
+            mot = ""
+    if mot != "":
+        lst_mot.append(mot)
+    return lst_mot
+
         
 # Appels
 
