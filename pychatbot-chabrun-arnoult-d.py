@@ -248,6 +248,28 @@ def intersections(files_names,qst):
             lst2.append(el)
     return lst2
     
+def tf_idf_question(matrice,question):
+    mots_qst=question_tokenisee[question]
+    occu_mot={}
+    vecteur_tf_idf_qst=[]
+    for mot in mots_qst:
+        if mot in matrice:
+            occu_mot[mot]+=1
+        else:    
+            occu_mot[mot]=1
+    score_idf[mot]= matrice[mot]
+    score_tf=occu_mot[mot]/len(mots_qst)
+    score_tf_idf=score_tf*score_idf
+    if score_tf_idf[mot]!=0:
+        score_tf_idf=vecteur_tf_idf_qst[matrice[mot]]
+    return vecteur_tf_idf_qst
+
+question = "Que pensez vous du climat?"
+resultat = tf_idf_question(question, matrice)
+print(resultat)
+
+
+  
 # Appels
 
 directory = "speeches"
