@@ -82,28 +82,39 @@ def fich_to_list(f): # Enleve tous les signes de ponctuation et remplace les ' e
     return lst1   
     
 def dictionnaire(files_names): # Calcule le nombre d occurence de chaque element d un tableau dans celui ci
-    lst = []
+    dico = {}
+    idx = 0
     for el in files_names:
         f = open("speeches/"+el,"r",encoding="utf8")
-        lst.append(fich_to_list(f))
-    dico = {}
-    idx = 1
-    for lst2 in lst:
-        for el in lst2:
+        lst = fich_to_list(f)
+        dico_temp = dico_of_fich(lst)
+        for el in dico_temp:
             if el in dico:
-                dico[el][0] += 1
-                if dico[el][1][-1]!=idx:
-                    dico[el][1].append(idx)
+                dico[el].append(dico_temp[el])
             else:
-                dico[el] = [1,[idx]]
+                dico[el] = [0]*idx+ [dico_temp[el]]
+        for el in dico:
+            if not el in dico_temp:
+                dico[el].append(0)
         idx +=1
+    return dico           
+
+def dico_of_fich(lst):
+    dico= {}
+    for el in lst:
+        if not el in dico:
+            dico[el] = 0
+        dico[el] += 1
     return dico
         
 def calcul_idf(dico_tf): # Avec le nombre d occurence de chaque mot on calule le log en base 10 de ce mot 
     dico_idf = {}
     for el in dico_tf:
-        idf = round(log((8/len(dico_tf[el][1]))+1,10),3)
-        dico_idf[el] = idf
+        nbr_fich =0
+        for tf in dico_tf[el]:
+            if tf != 0:
+                nbr_fich +=1
+        dico_idf[el] = round(log10(8/nbr_fich),3)
     return dico_idf
 
 def score_tf_idf(files_names):
@@ -111,8 +122,10 @@ def score_tf_idf(files_names):
     dico_idf = calcul_idf(dico_tf)
     dico_tf_idf = {}
     for el in dico_tf:
-        dico_tf_idf[el] = dico_tf[el][0]*dico_idf[el]
-    return dico_tf_idf     
+        dico_tf_idf[el] = []
+        for nbr in dico_tf[el]:
+            dico_tf_idf[el].append(nbr*dico_idf[el])
+    return dico_tf_idf   
     
 def matrice(files_names):
     matrice = {}
@@ -172,38 +185,41 @@ def mot_max_chirac(files_names):
 def repetition(files_names):
     dico_tf = dictionnaire(files_names)
     names,fich = [],[]
-    for el in dico_tf["nation"][1]:
-        nom = fich_to_name(files_names[el-1])
-        fich.append(files_names[el-1])
+    maxi = [0,""]
+    for idx in range(len(dico_tf["nation"])):
+        el = dico_tf["nation"][idx]
+        if el != 0 :
+            nom = fich_to_name(files_names[idx])
+            fich.append(files_names[idx])
         if not nom in names:
             names.append(nom)
-    maxi = [0,""]
-    for nom_f in fich:
-        f = open("speeches/"+nom_f,"r",encoding="utf8")
-        lst1 = fich_to_list(f)
-        rep = 0
-        for mot in lst1:
-            if mot == "nation":
-                rep +=1
-        if maxi[0] < rep and fich_to_name(nom_f) != maxi[1]:
-            maxi =[rep,fich_to_name(nom_f)]
-        if maxi[0] < rep and fich_to_name(nom_f) == maxi[1]:
-            maxi[0] += rep
+        if maxi[0] < el and nom != maxi[1]:
+            maxi =[el, nom]
+        if maxi[0] < el and nom == maxi[1]:
+            maxi[0] += el
     return names,maxi
                 
 def ecologie(files_names):
     dico_tf = dictionnaire(files_names)
     for el in dico_tf:
-        if el == "climat" or el == "écologie" :
-            return prenom(fich_to_name(files_names[dico_tf[el][1][0]-1]))
+        if el == "climat" or "écologie" in el :
+            print(el,dico_tf[el])
+            for nbr in range(len(dico_tf[el])):
+                if dico_tf[el][nbr] != 0:
+                    return prenom(fich_to_name(files_names[nbr]))
 
 def mots_dans_fichiers(files_names):
-    matrice = matrice(files_names)
-    lst = mots_pas_imp(matrice)
+    mat = matrice(files_names)
+    lst = mots_pas_imp(files_names)
     mots_evoq = []
-    for el in matrice:
-        if len(matrice[el]) == 8 and not el in lst:
-            mots_evoq.append(el)
+    for el in mat:
+        if len(mat[el]) == 8 and not el in lst:
+            evoq = True
+            for score in mat[el]:
+                if score == 0:
+                    evoq = False
+            if evoq:
+                 mots_evoq.append(el)
     return mots_evoq
 
 def question_tokenisee(qst):
@@ -223,7 +239,15 @@ def question_tokenisee(qst):
         lst_mot.append(mot)
     return lst_mot
 
-        
+def intersections(files_names,qst):
+    lst = question_tokenisee(qst)
+    matri = matrice(files_names)
+    lst2 = []
+    for el in lst:
+        if el in matri:
+            lst2.append(el)
+    return lst2
+    
 # Appels
 
 directory = "speeches"
