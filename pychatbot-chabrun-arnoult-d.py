@@ -248,20 +248,24 @@ def intersections(files_names,qst):
             lst2.append(el)
     return lst2
     
-def tf_idf_question(matrice,question):
-    mots_qst=question_tokenisee[question]
-    occu_mot={}
+def tf_idf_question(files_names,question):
+    mots_qst= intersections(files_names,question)
+    occu_mot, dic={},{}
     vecteur_tf_idf_qst=[]
     for mot in mots_qst:
-        if mot in matrice:
+        if mot in occu_mot:
             occu_mot[mot]+=1
         else:    
             occu_mot[mot]=1
-    score_idf[mot]= matrice[mot]
-    score_tf=occu_mot[mot]/len(mots_qst)
-    score_tf_idf=score_tf*score_idf
-    if score_tf_idf[mot]!=0:
-        score_tf_idf=vecteur_tf_idf_qst[matrice[mot]]
+        score_idf = calcul_idf(dictionnaire(files_names))[mot]
+        score_tf = occu_mot[mot]/len(mots_qst)
+        score_tf_idf = round(score_tf*score_idf,4)
+        dic[mot] = score_tf_idf
+    for mot2 in dictionnaire(files_names):
+        if not mot2 in mots_qst:
+            vecteur_tf_idf_qst.append(0)
+        else:
+            vecteur_tf_idf_qst.append(dic[mot2])
     return vecteur_tf_idf_qst
 
 question = "Que pensez vous du climat?"
