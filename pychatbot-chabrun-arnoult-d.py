@@ -268,6 +268,17 @@ def tf_idf_question(files_names,question):
             vecteur_tf_idf_qst.append(dic[mot2])
     return vecteur_tf_idf_qst
 
+def pertinence_doc(matrice,files_names,vecteur_question):
+    nom_doc=""
+    similarité_best=0
+    for nom in files_names:
+        matrice[nom_doc]=
+        similarité=0
+        for el in range vecteur_doc:
+        similarité+=vecteur_doc[el]*vecteur_question[el]
+    return nom_doc
+
+
 question = "Que pensez vous du climat?"
 resultat = tf_idf_question(question, matrice)
 print(resultat)
