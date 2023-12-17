@@ -278,6 +278,28 @@ def pertinence_doc(matrice,files_names,vecteur_question):
         similarité+=vecteur_doc[el]*vecteur_question[el]
     return nom_doc
 
+def produit_scalaire(vecteur1,vecteur2):
+    return vecteur1*vecteur2
+
+def norme_vecteur(vecteur):
+    return sqrt(vecteur**2)
+
+def similarité_cos(vecteur1,vecteur2): 
+    return produit_scalaire(vecteur1,vecteur2)/(norme_vecteur(vecteur1)*norme_vecteur(vecteur2))
+
+def similarité_doc(files_names,question):
+    matrice_tf_idf = matrice(files_names)
+    matrice_question = tf_idf_question(files_names,question)
+    matrice_vecteurs = []
+    for el in matrice_tf_idf:
+        matrice_vecteurs.append(matrice_tf_idf[el])
+    cos_max =0
+    for i in range(8):
+        for j in range(len(matrice_question)):
+            cos = similarité_cos(matrice_vecteurs[j][i], matrice_question[j])
+            if cos > cos_max:
+                cos_max,idx = cos,i
+    return files_names[i],cos_max
 
 question = "Que pensez vous du climat?"
 resultat = tf_idf_question(question, matrice)
