@@ -1,6 +1,6 @@
 #Main 
 #Pour utiliser le programme, veuillez saisir le numéro correspondant à la fonction à laquelle vous voulez accéder
-from pychatbot-chabrun-arnoult-d.py import *
+from pychatbot-chabrun-arnoult-d import *
 
 if __name__ == '__main__':
     chat = input("Voulez vous accéder au Chatbot ? (oui/non) ")
