@@ -268,16 +268,6 @@ def tf_idf_question(files_names,question):
             vecteur_tf_idf_qst.append(dic[mot2])
     return vecteur_tf_idf_qst
 
-def pertinence_doc(matrice,files_names,vecteur_question):
-    nom_doc=""
-    similarité_best=0
-    for nom in files_names:
-        matrice[nom_doc]=vect_doc
-        similarité=0
-        for el in range vect_doc:
-        similarité+=vecteur_doc[el]*vecteur_question[el]
-    return nom_doc
-
 def produit_scalaire(vecteur1,vecteur2):
     produit = 0
     for i in range(len(vecteur1)):
