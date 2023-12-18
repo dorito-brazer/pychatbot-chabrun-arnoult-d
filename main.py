@@ -3,19 +3,8 @@
 from pychatbot-chabrun-arnoult-d.py import *
 
 if __name__ == '__main__':
-    Fonction = int(input("Saisir le numéro de la fonctionnalité: "))
-    if Fonction == 1 :
-      mots_pas_imp(matrcie)
-    elif Fonction == 2:
-        mots_score_max(matrice)
-    elif Fonction == 3 :
-        mot_max_chirac(files_names)
-    elif Fonction == 4 :
-        repetition(files_names)
-    elif Fonction == 5 :
-        ecologie(files_names)
-    elif Fonction == 6 :
-        mots_dans_fichiers()  
-    else:
-        print("Ce numéro de fonction n'existe pas")
-      
+    question = input("¨Voulez-vous posez votre question à notre ChatBot ? (o/n) ")
+    if not "n" in question :
+        question = input("Quelle est votre question ? ")
+        print(choisir_phrases(files_names,question))
+
