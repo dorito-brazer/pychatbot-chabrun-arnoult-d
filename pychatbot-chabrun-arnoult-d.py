@@ -10,7 +10,7 @@ def list_of_files(directory, extension): # Recupere le nom des fichiers textes c
         if filename.endswith(extension): 
             files_names.append(filename)
     return files_names
-
+    
 def minuscules(texte): # Transforme tout les carateres majuscules en minuscules et ecris dans un fichier le meme texte en minuscule
     text = open("speeches/"+ texte, "r", encoding = "utf8")
     lst1 = [] 
@@ -335,7 +335,19 @@ question = "Que pensez vous du climat?"
 resultat = tf_idf_question(question, matrice)
 print(resultat)
 
-
+def tf_idf_max_qst(files_names, question):
+    mot_score_max=""
+    mot_tf_idf_max=0
+    for ind in range(len(matrice_question)):
+        tf_idf=matrice_question[ind]
+        if tf_idf > mot_tf_idf_max:
+            mot_tf_idf_max=tf_idf
+            mot_score_max=dictionnaire(files_names)[ind]
+    return mot_score_max
+            
+            
+        
+    
   
 # Appels
 
