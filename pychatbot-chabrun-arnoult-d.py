@@ -365,25 +365,20 @@ def choisir_phrases(files_names,question):
     nom = similarité_doc(files_names,question)
     lst = phrases_of_fich(nom)
     mot = tf_idf_max_qst(files_names, question)
-    phrases = ""
+    name_president = prenom(fich_to_name(nom))
+    phrases = "" 
     for phr in lst:
         if mot in phr:
             phrases += phr +". "
-    return phrases
+    return "Comme l'a dit M."+name_president+": \""+ phrases + "\""       
             
 # Appels
 
 directory = "speeches"
 files_names = list_of_files(directory, "txt")
+question =  "Peux-tu me dire comment une nation peut-elle prendre soin du climat ?"
 
-question = "Que pensez vous du climat?"
-resultat = tf_idf_question(question, matrice)
-print(resultat)
+for name in files_names:
+    write(name)    
 
-#for name in files_names:
-#    write(name)
-f = open("speeches/"+files_names[0],"r",encoding="utf8")
-
-lst = fich_to_list(f)
-matrice = matrice(files_names)
-print(matrice)         
+print(choisir_phrases(files_names,question))
