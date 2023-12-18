@@ -331,11 +331,13 @@ def retrouve_mot(files_names,question):
             print(nbr)
     return intersections(files_names,question)[nbr]
 
-question = "Que pensez vous du climat?"
-resultat = tf_idf_question(question, matrice)
-print(resultat)
-
-
+def liste_mots_doc(files_names):
+    lst_fichiers = []
+    dico = dictionnaire(files_names)
+    for el in dico:
+        lst_fichiers.append(el)
+    return lst_fichiers
+    
 def tf_idf_max_qst(files_names, question):
     mot_score_max=""
     mot_tf_idf_max=0
@@ -373,6 +375,10 @@ def choisir_phrases(files_names,question):
 
 directory = "speeches"
 files_names = list_of_files(directory, "txt")
+
+question = "Que pensez vous du climat?"
+resultat = tf_idf_question(question, matrice)
+print(resultat)
 
 #for name in files_names:
 #    write(name)
