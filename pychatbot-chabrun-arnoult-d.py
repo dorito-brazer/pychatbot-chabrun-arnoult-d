@@ -335,20 +335,40 @@ question = "Que pensez vous du climat?"
 resultat = tf_idf_question(question, matrice)
 print(resultat)
 
+
 def tf_idf_max_qst(files_names, question):
     mot_score_max=""
     mot_tf_idf_max=0
+    matrice_question = tf_idf_question(files_names,question)
     for ind in range(len(matrice_question)):
         tf_idf=matrice_question[ind]
         if tf_idf > mot_tf_idf_max:
             mot_tf_idf_max=tf_idf
-            mot_score_max=dictionnaire(files_names)[ind]
+            mot_score_max= liste_mots_doc(files_names)[ind]
     return mot_score_max
+
+def phrases_of_fich(nom):
+    f = open("speeches/"+nom,"r",encoding="utf8")
+    phrase,lst = "",[]
+    for ligne in f:
+        for char in ligne[:-1]:
+            if char == ".":
+                lst.append(phrase)
+                phrase = ""
+            elif not char in '"/' :
+                phrase+= char
+    return lst
+
+def choisir_phrases(files_names,question):
+    nom = similarité_doc(files_names,question)
+    lst = phrases_of_fich(nom)
+    mot = tf_idf_max_qst(files_names, question)
+    phrases = ""
+    for phr in lst:
+        if mot in phr:
+            phrases += phr +". "
+    return phrases
             
-            
-        
-    
-  
 # Appels
 
 directory = "speeches"
