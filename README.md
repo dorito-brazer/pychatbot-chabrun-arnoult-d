@@ -56,3 +56,7 @@ Fonction ( similarité_cos ) ==> Calcule la similarité cosinus entre deux vecte
 Fonction ( retrouve_mot ) ==> Convertit un dictionnaire en une matrice.
 
 Fonction ( tf_idf_max_qst ) ==> Identifie le document le plus similaire à la question en calculant la similarité cosinus entre les vecteurs TF-IDF.
+
+Fonction ( phrase_of_fich ) ==> Permet de récupérer chaque phrase d un fichier et de l ajouter comme élément d'une liste
+
+Fonction ( choisir_phrases ) ==> Récupère chaque phrase contenant le mot avec la plus grande similarité et renvoie l ensembke des phrases sur le sujet
