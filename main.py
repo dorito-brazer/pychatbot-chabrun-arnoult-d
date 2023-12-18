@@ -3,8 +3,6 @@
 from pychatbot-chabrun-arnoult-d.py import *
 
 if __name__ == '__main__':
-    question = input("¨Voulez-vous posez votre question à notre ChatBot ? (o/n) ")
-    if not "n" in question :
-        question = input("Quelle est votre question ? ")
-        print(choisir_phrases(files_names,question))
+    question = input("Quelle est votre question ? ")
+    print(choisir_phrases(files_names,question))
 
